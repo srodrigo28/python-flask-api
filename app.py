@@ -65,6 +65,18 @@ def create_app():
             }
         })
 
+    @app.errorhandler(400)
+    def bad_request(error):
+        return jsonify({"error": "Bad Request", "message": str(error)}), 400
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({"error": "Not Found", "message": "O recurso solicitado não existe."}), 404
+
+    @app.errorhandler(500)
+    def internal_error(error):
+        return jsonify({"error": "Internal Server Error", "message": "Ocorreu um erro interno no servidor."}), 500
+
     return app
 
 if __name__ == '__main__':

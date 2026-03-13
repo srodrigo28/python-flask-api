@@ -20,6 +20,23 @@ def add_produto():
     if not name or price is None:
         return jsonify({"error": "Nome e preço são obrigatórios"}), 400
 
+    if not isinstance(name, str) or not name.strip():
+        return jsonify({"error": "O nome não pode estar vazio"}), 400
+
+    try:
+        price = float(price)
+        if price < 0:
+            return jsonify({"error": "O preço não pode ser negativo"}), 400
+    except ValueError:
+        return jsonify({"error": "Preço inválido"}), 400
+
+    try:
+        stock = int(stock)
+        if stock < 0:
+             return jsonify({"error": "O estoque não pode ser negativo"}), 400
+    except ValueError:
+        return jsonify({"error": "Estoque inválido"}), 400
+
     # Verifica se o usuário tem uma loja
     loja = Loja.query.filter_by(user_id=current_user_id).first()
     
@@ -112,13 +129,27 @@ def update_produto(produto_id):
     
     # Atualiza apenas os campos enviados
     if 'name' in data:
-        produto.name = data['name']
+        if not isinstance(data['name'], str) or not data['name'].strip():
+            return jsonify({"error": "O nome não pode estar vazio"}), 400
+        produto.name = data['name'].strip()
     if 'price' in data:
-        produto.price = data['price']
+        try:
+            price = float(data['price'])
+            if price < 0:
+                return jsonify({"error": "O preço não pode ser negativo"}), 400
+            produto.price = price
+        except ValueError:
+            return jsonify({"error": "Preço inválido"}), 400
     if 'description' in data:
         produto.description = data['description']
     if 'stock' in data:
-        produto.stock = data['stock']
+        try:
+            stock = int(data['stock'])
+            if stock < 0:
+                return jsonify({"error": "O estoque não pode ser negativo"}), 400
+            produto.stock = stock
+        except ValueError:
+            return jsonify({"error": "Estoque inválido"}), 400
     if 'image_url' in data:
         produto.image_url = data['image_url']
 

@@ -14,8 +14,12 @@ def create_loja():
     name = data.get('name')
     description = data.get('description', '')
 
-    if not name:
+    if not name or not isinstance(name, str) or not name.strip():
         return jsonify({"error": "O nome da loja é obrigatório"}), 400
+
+    name = name.strip()
+    if len(name) < 3:
+         return jsonify({"error": "O nome da loja deve ter pelo menos 3 caracteres"}), 400
 
     slug = slugify(name)
     
