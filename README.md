@@ -19,6 +19,10 @@ Seja bem-vindo(a) à API do nosso SaaS de Lojas Virtuais! Esta API foi construí
 ## 🚀 Como Rodar o Projeto Localmente
 
 Siga os passos abaixo para configurar o ambiente e rodar a API no seu computador:
+- comando
+```
+python app.py
+```
 
 ### 1. Requisitos
 - Tenha o Python instalado na máquina.

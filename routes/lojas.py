@@ -51,6 +51,25 @@ def get_loja(slug):
         "id": loja.id,
         "name": loja.name,
         "description": loja.description,
+        "plan_type": loja.plan_type,
         "created_at": loja.created_at,
         "produtos": produtos_data
     }), 200
+
+@lojas_bp.route('/upgrade', methods=['POST'])
+@jwt_required()
+def upgrade_plan():
+    current_user_id = get_jwt_identity()
+    loja = Loja.query.filter_by(user_id=current_user_id).first()
+    
+    if not loja:
+        return jsonify({"error": "Você não possui uma loja para atualizar."}), 404
+        
+    # Na vida real aqui haveria integração com Stripe/MercadoPago
+    if loja.plan_type == 'pro':
+        return jsonify({"message": "Sua loja já está no plano Pro!"}), 200
+        
+    loja.plan_type = 'pro'
+    db.session.commit()
+    
+    return jsonify({"message": "Updrade para o plano Pro realizado com sucesso!"}), 200

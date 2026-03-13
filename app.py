@@ -48,11 +48,15 @@ def create_app():
                 },
                 "loja_tenants": {
                     "POST /api/lojas/": "Cria uma nova loja vinculada ao usuário logado",
-                    "GET /api/lojas/<slug>": "Visualiza dados públicos da loja e seus produtos"
+                    "GET /api/lojas/<slug>": "Visualiza dados públicos da loja e seus produtos",
+                    "POST /api/lojas/upgrade": "Atualiza o plano da loja (Free -> PRO)"
                 },
                 "produtos_dono": {
                     "POST /api/admin/produtos/": "Adiciona um novo produto na loja do usuário",
-                    "GET /api/admin/produtos/": "Lista os produtos da loja do usuário logado"
+                    "GET /api/admin/produtos/": "Lista os produtos da loja do usuário logado",
+                    "GET /api/admin/produtos/<id>": "Retorna os detalhes de um produto específico",
+                    "PUT /api/admin/produtos/<id>": "Edita as informações de um produto específico",
+                    "DELETE /api/admin/produtos/<id>": "Exclui um produto específico"
                 },
                 "painel_master": {
                     "GET /api/master/lojas": "Lista todas as lojas cadastradas no sistema",

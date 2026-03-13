@@ -26,6 +26,7 @@ class Loja(db.Model):
     name = db.Column(db.String(100), nullable=False)
     slug = db.Column(db.String(100), unique=True, nullable=False)
     description = db.Column(db.Text, nullable=True)
+    plan_type = db.Column(db.String(20), default='free') # 'free' ou 'pro'
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # FK para o User (dono da loja)
